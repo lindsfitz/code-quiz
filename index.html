@@ -11,14 +11,14 @@
 <header>
     <!-- This is where the link to view high scores and the timer for the quiz will be located (will count down from 60s) -->
 
-    <div id="scoreboard">
+    <div id="highscore-link">
         <!-- link to the highscores list will go here -- use CSS to align on the left side of the page -->
-        <h6>Highscores</h6>
+        <a href="#scoreboard" id="score-page">Highscores</a>
     </div>
 
     <div id="timer">
         <!-- countdown timer will go here -- align to the right with CSS and create timer with JS -->
-        <h6>Time:</h6>
+        <h2></h2>
     </div>
 
 </header>
@@ -29,70 +29,85 @@
     <!-- buttons I will need:
     -A start button that triggers the timmer start and moves on to the next question without reloading the page
     - 4 buttons with each of the multiple choice question answers for each question  -->
+    <!-- Will add data-status attributes to each of these divs to adjust if they are shown on the page or not with JS -->
 
-    <div id = start>
+    <div id="start" data-state="showing">
         <h1>Coding Quiz Challenge</h1>
         <p>Try to answer the following code-related questions within the time limit. Wrong answers will penalize your scoretime by 10 seconds!</p>
-        <button type="button">Start!</button>
+        <button type="button" id="startBtn">Start!</button>
     </div>
 
-    <div>
-        <h3>Question 1</h3>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
+    <div id="quiz-content" data-state="hidden">
+        <h1 id="questions">Question</h1>
+        <button type="button" class="answers" id="ans1">answer1</button><br><br>
+        <button type="button" class="answers" id="ans2">answer2</button><br><br>
+        <button type="button" class="answers" id="ans3">answer3</button><br><br>
+        <button type="button" class="answers" id="ans4">answer4</button><br><br>
     </div>
     
-    <div>
-        <h3>Question 2</h3>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-    </div>
-
-    <div>
-        <h3>Question 3</h3>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-    </div>
-
-    <div>
-        <h3>Question 4</h3>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-    </div>
-
-    <div>
-        <h3>Question 5</h3>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-    </div>
-
-    <div>
-        <h3>Question 6</h3>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-        <button type="button">answer</button>
-    </div>
-
+    
     <!-- Final form to enter initials to be added to the highscore page. Should display final score on this page as well  -->
     <div id="scoreForm">
-        <h3>Thank you for playing! Your final score: </h3>
+        <h1>Thank you for playing! Your final score: </h1>
+        <h1 id="final-score"></h1>
         <form action="/action_page.php" method="get">
             <label for="initials">Enter your initials here:</label>
             <input type="text" id="initials" name="initials"><br><br>
-            <input type="submit" value="Submit">
+            <input type="submit" id="submitBtn" value="Submit">
         </form>
     </div>
     
+    <section id="scoreboard" data-state="hidden">
+        <h1>Highscores</h1>
+        <div id=scoresText></div>
+        <button type="button" id="gobackBtn">Go Back</button>
+        <button type="button" id="reset-scores">Clear Highscores</button>
+        
+    </section>
+    
+    <script src="./assets/script.js"></script>
+    
 </main>
+
+
+
 </html>
+<!-- <div>
+    <h1>Question 2</h1>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+</div>
+
+<div>
+    <h1>Question 3</h1>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+</div>
+
+<div>
+    <h1>Question 4</h1>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+</div>
+
+<div>
+    <h1>Question 5</h1>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+</div>
+
+<div>
+    <h1>Question 6</h1>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+    <button type="button">answer</button>
+</div> -->

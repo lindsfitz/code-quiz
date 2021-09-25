@@ -4,3 +4,24 @@
 -Center the text/buttons for each question 
 -Hide each div question? Until each previous button is clicked? And then use js to change which div is hidden?
  */
+
+ header {
+     display:flex;
+     justify-content: space-between;
+     margin:15px;
+ }
+
+ main {
+     text-align: center;
+ }
+
+button {
+    background-color: purple;
+    color:white;
+    padding:7px;
+    border-radius: 10px;
+}
+
+ #quiz-content, #scoreForm, #scoreboard {
+     display:none;
+ }
