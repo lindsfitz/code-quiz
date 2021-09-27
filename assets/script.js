@@ -116,6 +116,14 @@ function endQuiz() {
 
 }
 
+function saveInfo() {
+
+}
+
+function init() {
+
+}
+
 
 function showElement (element) {
     element.setAttribute("style", "display:block");
@@ -147,6 +155,8 @@ quizDiv.addEventListener("click", function(event){
         console.log(index)
     }
 })
+
+submitInBtn.addEventListener("click", saveInfo())
 
 
 
