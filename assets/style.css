@@ -25,3 +25,7 @@ button {
  #quiz-content, #scoreForm, #scoreboard {
      display:none;
  }
+
+ ul {
+     list-style: none;
+ }

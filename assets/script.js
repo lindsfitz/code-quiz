@@ -6,14 +6,17 @@ var startBtn = document.querySelector("#startBtn")
 var answerBtns = document.querySelector(".answers")
 var submitInBtn = document.querySelector("#submitBtn")
 var goBackBtn = document.querySelector("#gobackBtn")
+var highscoresList = document.querySelector("#highscores")
 var resetScoresBtn = document.querySelector("#reset-scores")
 var scoreboardLink = document.querySelector("#score-page")
+var scoresText = document.querySelector("#scoresText")
 var timerDiv = document.querySelector("#timer")
 var startDiv = document.querySelector("#start")
 var quizDiv = document.querySelector("#quiz-content")
 var scoreFormDiv = document.querySelector("#scoreForm")
 var scoreboardDiv = document.querySelector("#scoreboard")
 var showScore = document.querySelector("#final-score")
+var inInput = document.querySelector("#initials")
 var divsContainer = [startDiv, quizDiv, scoreFormDiv, scoreboardDiv]
 var questionText = document.querySelector("#questions")
 var ans1Btn = document.querySelector("#ans1")
@@ -21,10 +24,14 @@ var ans2Btn = document.querySelector("#ans2")
 var ans3Btn = document.querySelector("#ans3")
 var ans4Btn = document.querySelector("#ans4")
 var answerComp = false;
-var index = 0
+var indexQ = 0
 var finalScore = 0;
-
+var userInitial;
 var secondsLeft = 60;
+var timeInterval;
+var highscoreList = []
+
+
 var quizQuestions = [
     {question: "Commonly used data types DO NOT include:",
     answers: {
@@ -53,11 +60,23 @@ var quizQuestions = [
     },
     correctAnswer: "all of the above",
     },
+    {question: "Commonly used data types DO NOT include:",
+    answers: {
+        a: "strings",
+        b: "booleans",
+        c: "alerts",
+        d: "numbers",
+    },
+    correctAnswer: "alerts",
+    }
 ]
 
+init();
+
 function setTimer() {
-    var timeInterval = setInterval(function() {
-        secondsLeft --;
+    timeInterval = setInterval(function() {
+        if (secondsLeft > 0) {
+        secondsLeft --;}
         timerDiv.textContent = secondsLeft + " seconds remaining";
 
         if (secondsLeft === 0) {
@@ -72,56 +91,58 @@ function startQuiz(){
     setTimer();
     hideElement(startDiv);
     showElement(quizDiv);
-    showQuestion(index);
+    showQuestion(indexQ);
 }
 
 
-function showQuestion(index){
-    questionText.textContent = quizQuestions[index].question;
-    ans1Btn.textContent = quizQuestions[index].answers.a;
-    ans2Btn.textContent = quizQuestions[index].answers.b;
-    ans3Btn.textContent = quizQuestions[index].answers.c;
-    ans4Btn.textContent = quizQuestions[index].answers.d;
+function showQuestion(indexQ){
+    questionText.textContent = quizQuestions[indexQ].question;
+    ans1Btn.textContent = quizQuestions[indexQ].answers.a;
+    ans2Btn.textContent = quizQuestions[indexQ].answers.b;
+    ans3Btn.textContent = quizQuestions[indexQ].answers.c;
+    ans4Btn.textContent = quizQuestions[indexQ].answers.d;
 }
 
 function answerCheck(clickedElement){
-    for (let i=0; i<quizQuestions.length; i++) {
-        if (clickedElement.textContent === quizQuestions[i].correctAnswer) {
-            answerComp = true;
-            console.log(answerComp)
-        };
-    }
-    if (answerComp === true && index === quizQuestions.length) {
+    if (clickedElement.textContent === quizQuestions[indexQ].correctAnswer && indexQ<(quizQuestions.length-1)) {
+        answerComp = true;
+        console.log(indexQ);
+        indexQ++;
+        showQuestion(indexQ); 
+    } else if (clickedElement.textContent === quizQuestions[indexQ].correctAnswer && indexQ===(quizQuestions.length-1)) {
         finalScore = secondsLeft;
-        secondsLeft = 0;
-        console.log(finalScore);
-        endQuiz();
-    } else if (answerComp != true) {
-        secondsLeft = (secondsLeft-10);
-    } 
-}
+        indexQ=0;
+        endQuiz();} 
     
-function nextQ(){
-    index = (index+1);
-    if (index>quizQuestions.length) {
-        index=0;
+    else if (answerComp != true){
+         secondsLeft = (secondsLeft-10)
     }
-    return index
 }
+
 
 function endQuiz() {
     hideAllElements();
     showElement(scoreFormDiv);
-    showScore.textContent = finalScore;
-
+    showScore.textContent = finalScore; 
 }
 
 function saveInfo() {
 
+    highscoreList.push([inInput.value,finalScore]);
+    localStorage.setItem('highscore-list', JSON.stringify(highscoreList));
+    inInput.textContent = '';
+    init();
 }
 
 function init() {
-
+    var lastScore = JSON.parse(localStorage.getItem('highscore-list'));
+    if (lastScore !== null) {
+        for (let i = 0; i < lastScore.length; i++) {
+            var scoresLi = document.createElement("li")
+            highscoresList.appendChild(scoresLi)
+            scoresLi.textContent = lastScore[i].join("-");
+        }
+    } else scoresText.textContent = "No highscores yet."
 }
 
 
@@ -150,15 +171,19 @@ startBtn.addEventListener("click",startQuiz)
 quizDiv.addEventListener("click", function(event){
     var clickedElement = event.path[0];
     answerCheck(clickedElement);
-    if (answerComp===true){
-        showQuestion(nextQ());
-        console.log(index)
-    }
+    // if (indexQ >= quizQuestions.length) {
+    //     finalScore = secondsLeft;
+    //     endQuiz();
+    // }
+    
 })
 
-submitInBtn.addEventListener("click", saveInfo())
-
-
+submitInBtn.addEventListener("click", function(event) {
+    event.preventDefault();
+    saveInfo();
+    hideAllElements();
+    showElement(scoreboardDiv);
+})
 
 scoreboardLink.addEventListener("click", function(){
     hideAllElements();
@@ -167,4 +192,9 @@ scoreboardLink.addEventListener("click", function(){
 goBackBtn.addEventListener("click",function(){
     hideAllElements();
     showElement(startDiv);
+})
+
+resetScoresBtn.addEventListener("click",function(){
+    localStorage.removeItem('highscore-list')
+    scoresText.textContent = "No highscores yet."
 })

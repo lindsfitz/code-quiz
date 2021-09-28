@@ -50,7 +50,7 @@
     <div id="scoreForm">
         <h1>Thank you for playing! Your final score: </h1>
         <h1 id="final-score"></h1>
-        <form action="/action_page.php" method="get">
+        <form method="post">
             <label for="initials">Enter your initials here:</label>
             <input type="text" id="initials" name="initials"><br><br>
             <input type="submit" id="submitBtn" value="Submit">
@@ -59,7 +59,10 @@
     
     <section id="scoreboard" data-state="hidden">
         <h1>Highscores</h1>
-        <div id=scoresText></div>
+        <div id=scoresText>
+            <ul id="highscores"></ul>
+        </div>
+
         <button type="button" id="gobackBtn">Go Back</button>
         <button type="button" id="reset-scores">Clear Highscores</button>
         
