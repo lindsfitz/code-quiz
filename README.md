@@ -19,5 +19,10 @@ THEN the game is over
 WHEN the game is over
 THEN I can save my initials and my score
 
+# Mock up of approximately how the webpage should look:
 
 <img src="./assets/quiz-homework.png">
+
+# Link to the deployed application: 
+
+[Code Quiz](https://lindsfitz.github.io/code-quiz/)
