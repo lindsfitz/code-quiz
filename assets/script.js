@@ -1,6 +1,3 @@
-// use local storage to store data on one page and you can retrieve that data on another page
-// AKA store the highscores (setItem on the original page) and retrieve that data using the (getItem) on the highscore page to save the highscore and display it on the separate highscore page 
-// use Event Listener "click" and when the submit button is clicked we will add the score to the local storage 
 
 var startBtn = document.querySelector("#startBtn")
 var answerBtns = document.querySelector(".answers")
@@ -60,20 +57,21 @@ var quizQuestions = [
     },
     correctAnswer: "all of the above",
     },
-    {question: "Commonly used data types DO NOT include:",
+    {question: "Which of the following variables is valid in Javascript?",
     answers: {
-        a: "strings",
-        b: "booleans",
-        c: "alerts",
-        d: "numbers",
+        a: "myValue",
+        b: "input",
+        c: "first name",
+        d: "function",
     },
-    correctAnswer: "alerts",
+    correctAnswer: "myValue",
     }
 ]
 
 init();
 
 function setTimer() {
+    secondsLeft = 60;
     timeInterval = setInterval(function() {
         if (secondsLeft > 0) {
         secondsLeft --;}
@@ -106,15 +104,14 @@ function showQuestion(indexQ){
 function answerCheck(clickedElement){
     if (clickedElement.textContent === quizQuestions[indexQ].correctAnswer && indexQ<(quizQuestions.length-1)) {
         answerComp = true;
-        console.log(indexQ);
         indexQ++;
         showQuestion(indexQ); 
     } else if (clickedElement.textContent === quizQuestions[indexQ].correctAnswer && indexQ===(quizQuestions.length-1)) {
         finalScore = secondsLeft;
         indexQ=0;
+        secondsLeft=0;
         endQuiz();} 
-    
-    else if (answerComp != true){
+    else if (answerComp !== true && secondsLeft>0){
          secondsLeft = (secondsLeft-10)
     }
 }
@@ -127,11 +124,18 @@ function endQuiz() {
 }
 
 function saveInfo() {
-
     highscoreList.push([inInput.value,finalScore]);
+    if (highscoreList !== null) {
+        for (let i = 0; i < highscoreList.length; i++) {
+            var scoresLi = document.createElement("li")
+            highscoresList.appendChild(scoresLi)
+            scoresLi.textContent = highscoreList[i].join("   -   ");
+        }
+    } else scoresText.textContent = "No highscores yet.";
+
     localStorage.setItem('highscore-list', JSON.stringify(highscoreList));
+
     inInput.textContent = '';
-    init();
 }
 
 function init() {
@@ -140,7 +144,7 @@ function init() {
         for (let i = 0; i < lastScore.length; i++) {
             var scoresLi = document.createElement("li")
             highscoresList.appendChild(scoresLi)
-            scoresLi.textContent = lastScore[i].join("-");
+            scoresLi.textContent = lastScore[i].join("   -   ");
         }
     } else scoresText.textContent = "No highscores yet."
 }
@@ -171,11 +175,10 @@ startBtn.addEventListener("click",startQuiz)
 quizDiv.addEventListener("click", function(event){
     var clickedElement = event.path[0];
     answerCheck(clickedElement);
-    // if (indexQ >= quizQuestions.length) {
-    //     finalScore = secondsLeft;
-    //     endQuiz();
-    // }
-    
+    if (answerComp != true) {
+        secondsLeft = (secondsLeft-10)
+   }
+  
 })
 
 submitInBtn.addEventListener("click", function(event) {

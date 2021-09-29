@@ -9,28 +9,18 @@
 </head>
 
 <header>
-    <!-- This is where the link to view high scores and the timer for the quiz will be located (will count down from 60s) -->
 
     <div id="highscore-link">
-        <!-- link to the highscores list will go here -- use CSS to align on the left side of the page -->
         <a href="#scoreboard" id="score-page">Highscores</a>
     </div>
 
     <div id="timer">
-        <!-- countdown timer will go here -- align to the right with CSS and create timer with JS -->
         <h2></h2>
     </div>
 
 </header>
 
 <main>
-    <!-- where the questions will be  -->
-
-    <!-- buttons I will need:
-    -A start button that triggers the timmer start and moves on to the next question without reloading the page
-    - 4 buttons with each of the multiple choice question answers for each question  -->
-    <!-- Will add data-status attributes to each of these divs to adjust if they are shown on the page or not with JS -->
-
     <div id="start" data-state="showing">
         <h1>Coding Quiz Challenge</h1>
         <p>Try to answer the following code-related questions within the time limit. Wrong answers will penalize your scoretime by 10 seconds!</p>
@@ -45,8 +35,6 @@
         <button type="button" class="answers" id="ans4">answer4</button><br><br>
     </div>
     
-    
-    <!-- Final form to enter initials to be added to the highscore page. Should display final score on this page as well  -->
     <div id="scoreForm">
         <h1>Thank you for playing! Your final score: </h1>
         <h1 id="final-score"></h1>
@@ -62,7 +50,6 @@
         <div id=scoresText>
             <ul id="highscores"></ul>
         </div>
-
         <button type="button" id="gobackBtn">Go Back</button>
         <button type="button" id="reset-scores">Clear Highscores</button>
         
@@ -71,46 +58,4 @@
     <script src="./assets/script.js"></script>
     
 </main>
-
-
-
 </html>
-<!-- <div>
-    <h1>Question 2</h1>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-</div>
-
-<div>
-    <h1>Question 3</h1>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-</div>
-
-<div>
-    <h1>Question 4</h1>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-</div>
-
-<div>
-    <h1>Question 5</h1>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-</div>
-
-<div>
-    <h1>Question 6</h1>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-    <button type="button">answer</button>
-</div> -->
